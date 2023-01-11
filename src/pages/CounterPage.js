@@ -1,55 +1,53 @@
-import produce from "immer";
 import Button from "../components/Button";
 import { useReducer } from "react";
 import Panel from "../components/Panel";
 
-const INCREMENT_COUNT = "increment";
-const DECREMENT_COUNT = "decrement";
-const SET_VALUE_TO_ADD = "change-value-to-add";
-const ADD_VALUE_TO_COUNT = "add-value-to-count";
+const INCREMENT_COUNT = "increment-count";
+const DECREMENT_COUNT = "decrement-count";
+const SET_ADDITIONAL_NUMBER = "set-additional-number";
+const ADD_NUMBERS = "add-numbers";
 
-const reducer = (state, action) => {
+function reducer(state, action) {
   switch (action.type) {
     case INCREMENT_COUNT:
-      state.count = state.count + 1;
-      return;
+      return { ...state, count: state.count + 1 };
     case DECREMENT_COUNT:
-      state.count = state.count - 1;
-      return;
-    case SET_VALUE_TO_ADD:
-      state.valueToAdd = action.payload;
-      return;
-    case ADD_VALUE_TO_COUNT:
-      state.count = state.count + state.valueToAdd;
-      return;
+      return { ...state, count: state.count - 1 };
+    case SET_ADDITIONAL_NUMBER:
+      return { ...state, additionalNumber: action.payload };
+    case ADD_NUMBERS:
+      return {
+        ...state,
+        count: state.count + state.additionalNumber,
+        additionalNumber: 0,
+      };
     default:
-      return state;
+      throw new Error("Reducer error");
   }
-};
-
-const CounterPage = ({ initialCount }) => {
-  const [state, dispatch] = useReducer(produce(reducer), {
+}
+function CounterPage({ initialCount }) {
+  const [state, dispatch] = useReducer(reducer, {
     count: initialCount,
-    valueToAdd: 0,
+    additionalNumber: 0,
   });
 
-  const increment = () => {
+  const handleIncrement = () => {
     dispatch({
       type: INCREMENT_COUNT,
     });
   };
 
-  const decrement = () => {
+  const handleDecrement = () => {
     dispatch({
       type: DECREMENT_COUNT,
     });
   };
 
-  const handleChange = (e) => {
+  const handleSetAdditionNumber = (e) => {
     const value = +e.target.value;
 
     dispatch({
-      type: SET_VALUE_TO_ADD,
+      type: SET_ADDITIONAL_NUMBER,
       payload: value,
     });
   };
@@ -58,30 +56,30 @@ const CounterPage = ({ initialCount }) => {
     e.preventDefault();
 
     dispatch({
-      type: ADD_VALUE_TO_COUNT,
+      type: ADD_NUMBERS,
     });
   };
 
   return (
-    <Panel className="m-3">
-      <h1 className="text-lg">Count is {state.count}</h1>
-      <div className="flex flex-row">
-        <Button onClick={increment}>Increment</Button>
-        <Button onClick={decrement}>Decrement</Button>
+    <Panel className="flex flex-col gap-5">
+      <h1>Count is {state.count}</h1>
+      <div className="flex gap-3">
+        <Button onClick={handleIncrement}>Increment</Button>
+        <Button onClick={handleDecrement}>Decrement</Button>
       </div>
-
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="">Add a lot!</label>
+      <hr />
+      <form onSubmit={handleSubmit} className="flex flex-col gap-1 items-start">
+        <label htmlFor="">Add count</label>
         <input
-          value={state.valueToAdd || ""}
-          onChange={handleChange}
+          className="p-1.5 border"
           type="number"
-          className="p-1 m-3 bg-gray-50 border border-gray-300"
+          value={state.additionalNumber || ""}
+          onChange={handleSetAdditionNumber}
         />
-        <Button>Add it!</Button>
+        <Button>Add number</Button>
       </form>
     </Panel>
   );
-};
+}
 
 export default CounterPage;
