@@ -1,34 +1,68 @@
 import Button from "../components/Button";
-import { useState } from "react";
+import { useReducer } from "react";
 import Panel from "../components/Panel";
 
+const INCREMENT_COUNT = "increment-count";
+const DECREMENT_COUNT = "decrement-count";
+const SET_ADDITIONAL_NUMBER = "set-additional-number";
+const ADD_NUMBERS = "add-numbers";
+
+function reducer(state, action) {
+  switch (action.type) {
+    case INCREMENT_COUNT:
+      return { ...state, count: state.count + 1 };
+    case DECREMENT_COUNT:
+      return { ...state, count: state.count - 1 };
+    case SET_ADDITIONAL_NUMBER:
+      return { ...state, additionalNumber: action.payload };
+    case ADD_NUMBERS:
+      return {
+        ...state,
+        count: state.count + state.additionalNumber,
+        additionalNumber: 0,
+      };
+    default:
+      throw new Error("Reducer error");
+  }
+}
 function CounterPage({ initialCount }) {
-  const [count, setCount] = useState(initialCount);
-  const [addNumber, setAddNumber] = useState(0);
+  const [state, dispatch] = useReducer(reducer, {
+    count: initialCount,
+    additionalNumber: 0,
+  });
 
   const handleIncrement = () => {
-    setCount(count + 1);
+    dispatch({
+      type: INCREMENT_COUNT,
+    });
   };
 
   const handleDecrement = () => {
-    setCount(count - 1);
+    dispatch({
+      type: DECREMENT_COUNT,
+    });
   };
 
-  const handleAddCount = (e) => {
+  const handleSetAdditionNumber = (e) => {
     const value = +e.target.value;
-    setAddNumber(value);
+
+    dispatch({
+      type: SET_ADDITIONAL_NUMBER,
+      payload: value,
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setCount(count + addNumber);
-    setAddNumber(0);
+    dispatch({
+      type: ADD_NUMBERS,
+    });
   };
 
   return (
     <Panel className="flex flex-col gap-5">
-      <h1>Count is {count}</h1>
+      <h1>Count is {state.count}</h1>
       <div className="flex gap-3">
         <Button onClick={handleIncrement}>Increment</Button>
         <Button onClick={handleDecrement}>Decrement</Button>
@@ -39,10 +73,10 @@ function CounterPage({ initialCount }) {
         <input
           className="p-1.5 border"
           type="number"
-          value={addNumber || ""}
-          onChange={handleAddCount}
+          value={state.additionalNumber || ""}
+          onChange={handleSetAdditionNumber}
         />
-        <Button onClick={handleSubmit}>Add number</Button>
+        <Button>Add number</Button>
       </form>
     </Panel>
   );
