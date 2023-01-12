@@ -26,6 +26,10 @@ const Sidebar = () => {
       label: "Counter",
       path: "/counter",
     },
+    {
+      label: "Lists(redux)",
+      path: "/lists",
+    },
   ];
 
   const renderedLinks = links.map((link) => {
