@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import ModalPage from "./pages/ModalPage";
 import TablePage from "./pages/TablePage";
 import CounterPage from "./pages/CounterPage";
+import ListsPage from "./pages/ListsPage";
 
 const App = () => {
   return (
@@ -34,6 +35,10 @@ const App = () => {
 
         <Route path="/counter">
           <CounterPage initialCount={10} />
+        </Route>
+
+        <Route path="/lists">
+          <ListsPage />
         </Route>
       </div>
     </div>
