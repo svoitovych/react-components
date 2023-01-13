@@ -15,9 +15,7 @@ const MoviesList = () => {
           return (
             <li key={index} className="movies-list__movie-item">
               {movie}
-              <Button onClick={() => dispatch(removeMovie({ payload: movie }))}>
-                X
-              </Button>
+              <Button onClick={() => dispatch(removeMovie(movie))}>X</Button>
             </li>
           );
         })}
