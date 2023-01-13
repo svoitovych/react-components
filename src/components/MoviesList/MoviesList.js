@@ -2,10 +2,10 @@ import { Fragment } from "react";
 import Button from "../Button";
 import "./movies-list.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { addMovie, removeMovie } from "../../store/slices/listsSlice";
+import { addMovie, removeMovie } from "../../store/slices/moviesListSlice";
 
 const MoviesList = () => {
-  const movies = useSelector((state) => state.lists.moviesList);
+  const movies = useSelector((state) => state.movies.value);
   const dispatch = useDispatch();
 
   const renderMoviesList = () => {

@@ -2,10 +2,10 @@ import { Fragment } from "react";
 import Button from "../Button";
 import "./songs-list.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { addSong, removeSong } from "../../store/slices/listsSlice";
+import { addSong, removeSong } from "../../store/slices/songsListSlice";
 
 const SongsList = () => {
-  const songs = useSelector((state) => state.lists.songsList);
+  const songs = useSelector((state) => state.songs.value);
   const dispatch = useDispatch();
 
   const renderSongsList = () => {
