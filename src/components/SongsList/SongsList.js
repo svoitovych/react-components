@@ -15,9 +15,7 @@ const SongsList = () => {
           return (
             <li key={index} className="songs-list__song-item">
               {song}{" "}
-              <Button onClick={() => dispatch(removeSong({ payload: song }))}>
-                X
-              </Button>
+              <Button onClick={() => dispatch(removeSong(song))}>X</Button>
             </li>
           );
         })}
