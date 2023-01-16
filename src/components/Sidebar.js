@@ -30,6 +30,10 @@ const Sidebar = () => {
       label: "Lists(redux)",
       path: "/lists",
     },
+    {
+      label: "Cars",
+      path: "/cars",
+    },
   ];
 
   const renderedLinks = links.map((link) => {
