@@ -31,8 +31,8 @@ const Sidebar = () => {
       path: "/lists",
     },
     {
-      label: "Car(redux toolkit)",
-      path: "/car",
+      label: "Cars",
+      path: "/cars",
     },
   ];
 

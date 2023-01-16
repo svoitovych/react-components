@@ -7,7 +7,7 @@ import ModalPage from "./pages/ModalPage";
 import TablePage from "./pages/TablePage";
 import CounterPage from "./pages/CounterPage";
 import ListsPage from "./pages/ListsPage";
-import CarPage from "./pages/CarPage";
+import CarsPage from "./pages/CarsPage";
 
 const App = () => {
   return (
@@ -42,8 +42,8 @@ const App = () => {
           <ListsPage />
         </Route>
 
-        <Route path="/car">
-          <CarPage />
+        <Route path="/cars">
+          <CarsPage />
         </Route>
       </div>
     </div>
